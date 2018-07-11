@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter {
 
     @Bean
@@ -93,6 +95,7 @@ public class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter 
         final KeycloakAuthenticationToken token = (KeycloakAuthenticationToken)request.getUserPrincipal();
         return ((KeycloakPrincipal)token.getPrincipal()).getKeycloakSecurityContext().getToken();
     }
+
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         super.configure(http);
@@ -104,16 +107,16 @@ public class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 //.and()
                 .authorizeRequests()
 
-                .antMatchers("/admin/*")
+                //.antMatchers("/admin/*")
                 //.authenticated()
                 //.access("hasRole('ROLE_MANAGER')")
-                .hasRole("ADMIN")
+                //.hasRole("ADMIN")
                 //.hasAnyRole("MANAGER", "manager", "ROLE_MANAGER")
 
-                .antMatchers("/user/*")
+                //.antMatchers("/user/*")
                 //.authenticated()
                 //.access("hasRole('ROLE_USER')")
-                .hasRole("USER")
+                //.hasRole("USER")
                 //.hasAnyRole("USER", "user", "ROLE_USER")
 
                 .anyRequest()
